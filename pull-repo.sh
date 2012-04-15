@@ -10,6 +10,13 @@ if [ "x$WORKINGDIR" == "x" ]; then
 fi
 cd $WORKINGDIR
 
+ISAGITREPO=`ls -a | grep '^.git$' | wc -l`
+if [ $ISAGITREPO -gt 0 ]; then
+	echo " `pwd` 开始拉取数据"
+	git pull
+	exit
+fi
+
 PATH='/usr/bin/:/usr/sbin:/sbin:/bin'
 
 function gitPullCmd()
