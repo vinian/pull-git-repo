@@ -8,35 +8,35 @@ DIRECTORY=`ls`
 
 function findGitRepo()
 {
-	ISAGITREPO=`ls -a | grep '^.git$' | wc -l`
-	[[ $ISAGITREPO -gt 0 ]] && return 0 || return 1
+    ISAGITREPO=`ls -a | grep '^.git$' | wc -l`
+    [[ $ISAGITREPO -gt 0 ]] && return 0 || return 1
 }
 
 function gitPullCmd()
 {
-	DIRECTORY=$1
-	cd $DIRECTORY
-	if ( findGitRepo ); then
-        echo "$DIRECTORY 开始拉取数据"
-        git pull
-	else
-		SUBDIR=`ls`	
-		for i in $SUBDIR;do
-			if [ -d $i ]; then
-                cd $i;
-				if ( findGitRepo ); then
-                    echo "$i 开始拉取数据"
-                    git pull
-				else
-                    echo "$i 递归的处理这个目录"
-                    # how to handle this
-                    # "gitPullCmd $i" i don't think so
-				fi
-                cd ..
-			fi
-		done
-	fi
-	cd ..
+    DIRECTORY=$1
+        cd $DIRECTORY
+        if ( findGitRepo ); then
+            echo "$DIRECTORY 开始拉取数据"
+            git pull
+        else
+            SUBDIR=`ls`
+                for i in $SUBDIR;do
+                    if [ -d $i ]; then
+                        cd $i;
+                        if ( findGitRepo ); then
+                             echo "$i 开始拉取数据"
+                             git pull
+                        else
+                             echo "$i 递归的处理这个目录"
+                             # how to handle this
+                             # "gitPullCmd $i" i don't think so
+                        fi
+                        cd ..
+                    fi
+               done
+        fi
+        cd ..
 }
 
 for FILE in $DIRECTORY; do
