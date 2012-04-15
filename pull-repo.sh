@@ -4,6 +4,8 @@
 # usage:
 #  pull-git-repo.sh [ git-repo-directory ]
 
+PATH='/usr/bin/:/usr/sbin:/sbin:/bin'
+
 WORKINGDIR=$1
 if [ "x$WORKINGDIR" == "x" ]; then
     WORKINGDIR='.'
@@ -16,8 +18,6 @@ if [ $ISAGITREPO -gt 0 ]; then
 	git pull
 	exit
 fi
-
-PATH='/usr/bin/:/usr/sbin:/sbin:/bin'
 
 function gitPullCmd()
 {
